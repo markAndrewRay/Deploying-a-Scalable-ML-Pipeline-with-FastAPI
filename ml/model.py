@@ -21,6 +21,7 @@ def train_model(X_train, y_train):
     """
     model = DecisionTreeClassifier(random_state=42)
     model.fit(X_train, y_train)
+    return model
     pass
 
 
@@ -113,7 +114,7 @@ def performance_on_categorical_slice(
         Trained sklearn LabelBinarizer, only used if training=False.
     model : sklearn.ensemble.RandomForestClassifer
         Trained Random Forest Classifier 
-        
+
     Returns
     -------
     precision : float
@@ -121,10 +122,10 @@ def performance_on_categorical_slice(
     fbeta : float
 
     """        
-    data_slice = data[data[column_name] == slice_value]
+    data_subset = data[data[column_name] == slice_value]
         
     X_slice, y_slice, _, _ = process_data(
-        data_slice,
+        data_subset,
         categorical_features=categorical_features,
         label=label,
         training=False,

@@ -62,6 +62,7 @@ def inference(model, X):
         Predictions from the model.
     """
     preds = model.predict(X)
+    return preds
     pass
 
 def save_model(model, path):

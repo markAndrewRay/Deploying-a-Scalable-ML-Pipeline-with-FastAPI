@@ -28,7 +28,6 @@ class Data(BaseModel):
 
 path = os.path.join(os.getcwd(), "model", "encoder.pkl")
 encoder = load_model(path)
-
 path = os.path.join(os.getcwd(), "model", "model.pkl") 
 model = load_model(path)
 
@@ -39,7 +38,7 @@ app = FastAPI()
 @app.get("/")
 async def get_root():
     """ Say hello!"""
-    # your code here
+    return{"message": "Hello from the API!"}
     pass
 
 
@@ -66,9 +65,11 @@ async def post_inference(data: Data):
     ]
     data_processed, _, _, _ = process_data(
         # your code here
-        # use data as data input
-        # use training = False
-        # do not need to pass lb as input
+        X=data,
+        categorical_features=cat_features,
+        label=None,
+        training=False,
+        encoder=encoder
     )
-    _inference = None # your code here to predict the result using data_processed
+    _inference = model.predict(data_processed)
     return {"result": apply_label(_inference)}
